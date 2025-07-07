@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SILIC 2.0 - CAIXA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #0066cc;
+            margin-bottom: 1rem;
+        }
+        .btn {
+            padding: 12px 24px;
+            margin: 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-block;
+            text-decoration: none;
+            position: relative;
+        }
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn-primary {
+            background-color: #0066cc;
+            color: white;
+        }
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .main-actions {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .actions-secondary {
+            margin-top: 20px;
+        }
+        .debug {
+            margin: 20px 0;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        /* Efeito de clique visual */
+        .btn:hover::after {
+            content: "Funcionalidade a ser implementada";
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1000;
+        }
+        
+        .mensagem-instrucoes {
+            margin: 20px 0;
+            padding: 15px;
+            background: #d1ecf1;
+            color: #0c5460;
+            border-radius: 4px;
+            border-left: 4px solid #bee5eb;
+        }
+        
+        .botao-link {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .botao-link input[type="checkbox"] {
+            display: none;
+        }
+        
+        .botao-link input[type="checkbox"]:checked + .mensagem-toggle {
+            display: block;
+        }
+        
+        .mensagem-toggle {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1000;
+            margin-top: 5px;
+        }
+        
+        .mensagem-toggle::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SILIC 2.0 - CAIXA</h1>
+            <p>Protótipo - Sistema de Locação de Imóveis</p>
+        </header>
+        
+        <main>
+            <section>
+                <h2>Gestão de Imóveis</h2>
+                
+                <div class="mensagem-instrucoes">
+                    <strong>📋 Instruções:</strong> Passe o mouse sobre os botões para ver a mensagem "Funcionalidade a ser implementada"
+                </div>
+                
+                <div class="main-actions">
+                    <div class="actions-primary">
+                        <div class="botao-link">
+                            <label for="cadastro" class="btn btn-primary">
+                                Cadastrar Novo Edifício
+                            </label>
+                            <input type="checkbox" id="cadastro">
+                            <div class="mensagem-toggle">Funcionalidade a ser implementada</div>
+                        </div>
+                    </div>
+                    <div class="actions-secondary">
+                        <div class="botao-link">
+                            <label for="sipge" class="btn btn-info">
+                                Buscar no SIPGE/SAP
+                            </label>
+                            <input type="checkbox" id="sipge">
+                            <div class="mensagem-toggle">Funcionalidade a ser implementada</div>
+                        </div>
+                        
+                        <div class="botao-link">
+                            <label for="consulta" class="btn btn-warning">
+                                Buscar Consulta Pública
+                            </label>
+                            <input type="checkbox" id="consulta">
+                            <div class="mensagem-toggle">Funcionalidade a ser implementada</div>
+                        </div>
+                        
+                        <div class="botao-link">
+                            <label for="auditoria" class="btn btn-success">
+                                Auditoria de Dados
+                            </label>
+                            <input type="checkbox" id="auditoria">
+                            <div class="mensagem-toggle">Funcionalidade a ser implementada</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="debug">
+                    <strong>Status:</strong> Página carregada - Botões prontos (hover para ver mensagem)
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <noscript>
+        <div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 4px; margin: 20px 0;">
+            <strong>Aviso:</strong> JavaScript não está habilitado. Use o hover nos botões para ver as mensagens.
+        </div>
+    </noscript>
+</body>
+</html>
