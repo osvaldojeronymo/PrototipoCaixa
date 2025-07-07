@@ -16,7 +16,16 @@ https://github.com/osvaldojeronymo/PrototipoCaixa/tree/master/silic-imoveis
 ```
 https://osvaldojeronymo.github.io/PrototipoCaixa/
 ```
-*Aguarde alguns minutos para o GitHub Pages ficar disponível*
+*⏳ Aguarde alguns minutos para o GitHub Pages ficar disponível*
+
+### 4. **Links Alternativos (Enquanto GitHub Pages carrega)**
+```
+# Visualizar código diretamente no GitHub:
+https://github.com/osvaldojeronymo/PrototipoCaixa/blob/master/silic-imoveis/index.html
+
+# Download direto do ZIP:
+https://github.com/osvaldojeronymo/PrototipoCaixa/archive/refs/heads/master.zip
+```
 
 ## 📧 Template de E-mail para Desenvolvedores
 
@@ -28,8 +37,9 @@ Olá equipe,
 Compartilho com vocês o protótipo do Sistema de Locação de Imóveis da CAIXA (SILIC 2.0):
 
 🔗 Repositório: https://github.com/osvaldojeronymo/PrototipoCaixa
-🚀 Demo Online: https://osvaldojeronymo.github.io/PrototipoCaixa/
+🚀 Demo Online: https://osvaldojeronymo.github.io/PrototipoCaixa/ (aguarde alguns minutos)
 📁 Código Fonte: https://github.com/osvaldojeronymo/PrototipoCaixa/tree/master/silic-imoveis
+📥 Download ZIP: https://github.com/osvaldojeronymo/PrototipoCaixa/archive/refs/heads/master.zip
 
 Funcionalidades implementadas:
 ✅ Gestão completa de imóveis (100 registros demo)
@@ -87,8 +97,26 @@ silic-imoveis/
 ## ⚡ Links Rápidos
 
 - **Ver Código:** [GitHub](https://github.com/osvaldojeronymo/PrototipoCaixa/tree/master/silic-imoveis)
-- **Testar Online:** [Demo](https://osvaldojeronymo.github.io/PrototipoCaixa/)
+- **Testar Online:** [Demo](https://osvaldojeronymo.github.io/PrototipoCaixa/) *(aguarde alguns minutos)*
 - **Baixar ZIP:** [Download](https://github.com/osvaldojeronymo/PrototipoCaixa/archive/refs/heads/master.zip)
+- **Executar Localmente:** Baixe e abra `silic-imoveis/index.html` no navegador
+
+## 🛠️ Soluções Alternativas (Enquanto GitHub Pages carrega)
+
+1. **Download e execução local:**
+   - Baixe: https://github.com/osvaldojeronymo/PrototipoCaixa/archive/refs/heads/master.zip
+   - Extraia o arquivo
+   - Abra `silic-imoveis/index.html` no navegador
+
+2. **Visualizar código online:**
+   - https://github.com/osvaldojeronymo/PrototipoCaixa/blob/master/silic-imoveis/index.html
+
+3. **Clonar repositório:**
+   ```bash
+   git clone https://github.com/osvaldojeronymo/PrototipoCaixa.git
+   cd PrototipoCaixa/silic-imoveis
+   # Abrir index.html no navegador
+   ```
 
 ---
 
