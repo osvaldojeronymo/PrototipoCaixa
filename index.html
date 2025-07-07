@@ -1,127 +1,42 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
+    <title>SILIC 2.0 - CAIXA</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SILIC 2.0 - Sistema de Gestão de Imóveis CAIXA</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #004080 0%, #0066cc 100%);
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+        body { 
+            font-family: Arial, sans-serif; 
+            background: #004080; 
+            color: white; 
+            text-align: center; 
+            padding: 50px; 
         }
-        .container {
-            max-width: 800px;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            margin: 10px;
-            background: #ff6900;
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 105, 0, 0.3);
-        }
-        .btn:hover {
-            background: #e55a00;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 105, 0, 0.4);
-        }
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        .feature {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1rem;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .feature h3 {
-            margin: 0 0 0.5rem 0;
-            color: #ff6900;
-        }
-        .loading {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            opacity: 0.7;
-        }
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            .container { margin: 1rem; padding: 1.5rem; }
+        .btn { 
+            background: #ff6900; 
+            color: white; 
+            padding: 15px 30px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            display: inline-block; 
+            margin: 10px; 
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🏢 SILIC 2.0</h1>
-        <p class="subtitle">Sistema de Locação de Imóveis CAIXA</p>
-        
-        <p>Protótipo funcional do sistema de gestão de imóveis com interface moderna e responsiva.</p>
-        
-        <div>
-            <a href="silic-imoveis/" class="btn">🚀 Acessar Sistema</a>
-            <a href="https://github.com/osvaldojeronymo/PrototipoCaixa" class="btn">📂 Ver Código</a>
-        </div>
-        
-        <div class="features">
-            <div class="feature">
-                <h3>🏠 Gestão de Imóveis</h3>
-                <p>100 imóveis de demonstração com filtros avançados</p>
-            </div>
-            <div class="feature">
-                <h3>👥 Locadores</h3>
-                <p>Sistema completo de gestão de locadores e documentação</p>
-            </div>
-            <div class="feature">
-                <h3>📊 Dashboard</h3>
-                <p>Métricas e indicadores em tempo real</p>
-            </div>
-            <div class="feature">
-                <h3>📱 Responsivo</h3>
-                <p>Interface adaptável para desktop e mobile</p>
-            </div>
-        </div>
-        
-        <p class="loading">⏳ GitHub Pages pode levar alguns minutos para carregar...</p>
-    </div>
-
-    <script>
-        // Redirecionar automaticamente para o sistema após 3 segundos
-        setTimeout(() => {
-            const params = new URLSearchParams(window.location.search);
-            if (!params.has('demo')) {
-                // window.location.href = 'silic-imoveis/';
-            }
-        }, 3000);
-    </script>
+    <h1>🏢 SILIC 2.0</h1>
+    <h2>Sistema de Locação de Imóveis CAIXA</h2>
+    <p>Protótipo funcional com 100 imóveis de demonstração</p>
+    
+    <a href="silic-imoveis/index.html" class="btn">🚀 Acessar Sistema</a>
+    <a href="https://github.com/osvaldojeronymo/PrototipoCaixa" class="btn">📂 Ver Código</a>
+    
+    <h3>✅ Funcionalidades</h3>
+    <ul style="text-align: left; display: inline-block;">
+        <li>Gestão de 100 imóveis</li>
+        <li>Filtros funcionais</li>
+        <li>Sistema de locadores</li>
+        <li>Dashboard em tempo real</li>
+        <li>Interface responsiva</li>
+    </ul>
 </body>
 </html>
