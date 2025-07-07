@@ -15,9 +15,19 @@ class SistemaSILIC {
         this.itemsPerPageImoveis = 10;
         this.totalPaginasImoveis = 1;
         
-        // Inicializar imediatamente
-        this.inicializar();
-        this.carregarDadosDemo();
+        // Aguardar DOM estar pronto antes de inicializar
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                this.inicializar();
+                this.carregarDadosDemo();
+            });
+        } else {
+            // DOM já está pronto, aguardar um pouco mais
+            setTimeout(() => {
+                this.inicializar();
+                this.carregarDadosDemo();
+            }, 100);
+        }
     }
 
     inicializar() {        
@@ -36,8 +46,8 @@ class SistemaSILIC {
         document.getElementById('filtroStatus')?.addEventListener('change', () => this.filtrarLocadores());
         document.getElementById('limparFiltros')?.addEventListener('click', () => this.limparFiltros());
         
-        // Filtros e busca de imóveis
-        this.configurarFiltrosImoveis();
+        // Configurar filtros de imóveis imediatamente
+        this.configurarFiltrosImoveisImediato();
         
         // Paginação de locadores
         document.getElementById('itensPorPaginaSelect')?.addEventListener('change', (e) => {
@@ -63,7 +73,7 @@ class SistemaSILIC {
             }
         });
         
-        this.atualizarDashboard();
+        // Dashboard será atualizado após carregar dados
     }
 
     carregarDadosDemo() {
@@ -75,6 +85,11 @@ class SistemaSILIC {
         this.atualizarTabelaImoveis();
         
         console.log('Dados carregados:', this.imoveis.length, 'imóveis');
+        
+        // Reconfigurar filtros após carregar dados
+        this.configurarFiltrosImoveisImediato();
+        
+        console.log('✅ Sistema carregado com sucesso!');
     }
 
     gerarImoveisDemo(quantidade = 100) {
@@ -441,16 +456,28 @@ class SistemaSILIC {
     }
 
     atualizarTabelaImoveis() {
+        console.log('🔄 Iniciando atualizarTabelaImoveis...');
+        console.log('📊 Total de imóveis:', this.imoveis.length);
+        console.log('🔍 Filtros ativos:', !!this.imoveisFiltrados);
+        
         // Se há filtros ativos, usar a função filtrada
         if (this.imoveisFiltrados) {
+            console.log('📋 Usando lista filtrada');
             this.atualizarTabelaImoveisFiltrados();
             return;
         }
 
+        console.log('📋 Usando lista completa');
         const tbody = document.getElementById('tabelaImoveis');
-        if (!tbody) return;
+        console.log('🏷️ Elemento tbody encontrado:', !!tbody);
+        
+        if (!tbody) {
+            console.error('❌ Elemento tabelaImoveis não encontrado!');
+            return;
+        }
 
         tbody.innerHTML = '';
+        console.log('🧹 Tabela limpa');
 
         // Calcular paginação
         this.totalPaginasImoveis = Math.ceil(this.imoveis.length / this.itemsPerPageImoveis);
@@ -458,7 +485,10 @@ class SistemaSILIC {
         const endIndex = startIndex + this.itemsPerPageImoveis;
         const imoveisPagina = this.imoveis.slice(startIndex, endIndex);
 
-        imoveisPagina.forEach(imovel => {
+        console.log('📄 Imóveis para esta página:', imoveisPagina.length);
+
+        imoveisPagina.forEach((imovel, index) => {
+            console.log(`➕ Adicionando imóvel ${index + 1}:`, imovel.codigo);
             const locadoresDoImovel = this.locadores.filter(l => l.imovelId === imovel.id);
             const quantidadeLocadores = locadoresDoImovel.length;
             
@@ -477,7 +507,6 @@ class SistemaSILIC {
                         <span class="count-badge ${quantidadeLocadores === 0 ? 'zero' : quantidadeLocadores < 3 ? 'few' : 'many'}">
                             ${quantidadeLocadores}
                         </span>
-                        ${quantidadeLocadores === 0 ? '<span class="warning-icon">⚠️</span>' : ''}
                     </div>
                     ${quantidadeLocadores === 0 ? '<div class="action-warning">Nenhum locador cadastrado</div>' : ''}
                 </td>
@@ -511,8 +540,10 @@ class SistemaSILIC {
             }
         });
 
+        console.log('✅ Todos os imóveis foram adicionados à tabela');
         this.atualizarPaginacaoImoveis();
         this.atualizarInfoImoveis();
+        console.log('✅ atualizarTabelaImoveis concluída');
     }
 
     formatarStatusBadge(status) {
@@ -1352,63 +1383,274 @@ ${docsPendentesTotal > 0 ? `• ${docsPendentesTotal} documentos aguardando entr
         };
     }
 
+    // === FUNÇÃO DE DIAGNÓSTICO ===
+    
+    diagnosticarFiltros() {
+        console.log('🔍 === DIAGNÓSTICO DE FILTROS ===');
+        
+        const filtroInput = document.getElementById('filtroImoveis');
+        const filtroSelect = document.getElementById('filtroStatusImoveis');
+        const btnLimpar = document.getElementById('btnLimparFiltros');
+        const searchStats = document.getElementById('searchStats');
+        const filteredCount = document.getElementById('filteredCount');
+        
+        console.log('📋 Elementos encontrados:', {
+            filtroInput: !!filtroInput,
+            filtroSelect: !!filtroSelect,
+            btnLimpar: !!btnLimpar,
+            searchStats: !!searchStats,
+            filteredCount: !!filteredCount
+        });
+        
+        if (filtroInput) {
+            console.log('🔍 Input atual:', filtroInput.value);
+            console.log('🎯 Event listeners input:', getEventListeners ? getEventListeners(filtroInput) : 'N/A');
+        }
+        
+        if (filtroSelect) {
+            console.log('📊 Select atual:', filtroSelect.value);
+            console.log('🎯 Event listeners select:', getEventListeners ? getEventListeners(filtroSelect) : 'N/A');
+        }
+        
+        console.log('📊 Estado atual:', {
+            imoveisTotal: this.imoveis.length,
+            imoveisFiltrados: this.imoveisFiltrados ? this.imoveisFiltrados.length : 'null',
+            paginaAtual: this.currentPageImoveis,
+            itensPorPagina: this.itemsPerPageImoveis
+        });
+        
+        console.log('🔍 === FIM DO DIAGNÓSTICO ===');
+    }
+
+    // === FILTROS E BUSCA DE IMÓVEIS - VERSÃO ROBUSTA ===
+    
+    configurarFiltrosImoveisImediato() {
+        console.log('🔧 Configurando filtros de imóveis (versão robusta)...');
+        
+        // Tentar múltiplas vezes se necessário
+        let tentativas = 0;
+        const maxTentativas = 10;
+        
+        const tentarConfigurar = () => {
+            tentativas++;
+            const filtroInput = document.getElementById('filtroImoveis');
+            const filtroSelect = document.getElementById('filtroStatusImoveis');
+            const btnLimpar = document.getElementById('btnLimparFiltros');
+            
+            if (filtroInput && filtroSelect) {
+                console.log('✅ Elementos de filtro encontrados, configurando...');
+                
+                // Versão mais simples: usar arrow functions inline
+                filtroInput.oninput = (e) => {
+                    console.log('🔍 Filtro input (oninput):', e.target.value);
+                    this.aplicarFiltros();
+                };
+                
+                filtroSelect.onchange = (e) => {
+                    console.log('📊 Filtro status (onchange):', e.target.value);
+                    this.aplicarFiltros();
+                };
+                
+                // Também tentar addEventListener como backup
+                try {
+                    filtroInput.addEventListener('input', (e) => {
+                        console.log('🔍 Filtro input (addEventListener):', e.target.value);
+                        this.aplicarFiltros();
+                    });
+                    
+                    filtroSelect.addEventListener('change', (e) => {
+                        console.log('📊 Filtro status (addEventListener):', e.target.value);
+                        this.aplicarFiltros();
+                    });
+                } catch (error) {
+                    console.warn('⚠️ Erro ao configurar addEventListener:', error);
+                }
+                
+                // Configurar botão limpar se existir
+                if (btnLimpar) {
+                    console.log('🧹 Configurando botão limpar filtros...');
+                    btnLimpar.onclick = () => {
+                        console.log('🧹 Botão limpar clicado');
+                        this.limparFiltrosImoveis();
+                    };
+                }
+                
+                console.log('✅ Filtros de imóveis configurados com sucesso!');
+                return true;
+            } else {
+                console.log(`⚠️ Tentativa ${tentativas}/${maxTentativas} - Elementos não encontrados ainda...`);
+                if (tentativas < maxTentativas) {
+                    setTimeout(tentarConfigurar, 200);
+                } else {
+                    console.error('❌ Falha ao configurar filtros após', maxTentativas, 'tentativas');
+                }
+                return false;
+            }
+        };
+        
+        tentarConfigurar();
+    }
+
     // === FILTROS E BUSCA DE IMÓVEIS ===
     
     configurarFiltrosImoveis() {
-        // Filtro de busca em tempo real
-        const filtroImoveis = document.getElementById('filtroImoveis');
-        if (filtroImoveis) {
-            filtroImoveis.addEventListener('input', () => this.filtrarImoveis());
+        console.log('🔧 Configurando filtros de imóveis...');
+        
+        // Aguardar elementos estarem disponíveis
+        const iniciarFiltros = () => {
+            const filtroImoveis = document.getElementById('filtroImoveis');
+            const filtroStatus = document.getElementById('filtroStatusImoveis');
+            
+            if (filtroImoveis && filtroStatus) {
+                console.log('✅ Elementos encontrados, configurando eventos...');
+                
+                // Limpar eventos anteriores (se existirem)
+                filtroImoveis.removeEventListener('input', this.filtrarImoveis);
+                filtroStatus.removeEventListener('change', this.filtrarImoveis);
+                
+                // Configurar novos eventos
+                filtroImoveis.addEventListener('input', () => {
+                    console.log('🎯 Input event:', filtroImoveis.value);
+                    this.aplicarFiltros();
+                });
+                
+                filtroStatus.addEventListener('change', () => {
+                    console.log('🎯 Change event:', filtroStatus.value);
+                    this.aplicarFiltros();
+                });
+                
+                console.log('✅ Filtros configurados com sucesso!');
+                return true;
+            } else {
+                console.log('⚠️ Elementos não encontrados ainda...');
+                return false;
+            }
+        };
+        
+        // Tentar configurar imediatamente
+        if (!iniciarFiltros()) {
+            // Se não conseguir, tentar novamente após um delay
+            setTimeout(() => {
+                if (!iniciarFiltros()) {
+                    console.error('❌ Falha ao configurar filtros');
+                }
+            }, 1000);
+        }
+    }
+
+    aplicarFiltros() {
+        console.log('🔍 === INICIANDO APLICAÇÃO DE FILTROS ===');
+        
+        const filtroInput = document.getElementById('filtroImoveis');
+        const filtroSelect = document.getElementById('filtroStatusImoveis');
+        
+        if (!filtroInput || !filtroSelect) {
+            console.error('❌ Elementos de filtro não encontrados:', { 
+                input: !!filtroInput, 
+                select: !!filtroSelect 
+            });
+            return;
         }
         
-        // Filtro por status
-        const filtroStatus = document.getElementById('filtroStatusImoveis');
-        if (filtroStatus) {
-            filtroStatus.addEventListener('change', () => this.filtrarImoveis());
+        const termoBusca = filtroInput.value.toLowerCase().trim();
+        const statusFiltro = filtroSelect.value;
+        
+        console.log('📊 Filtros aplicados:', { 
+            termoBusca: termoBusca, 
+            statusFiltro: statusFiltro,
+            totalImoveis: this.imoveis.length
+        });
+        
+        // Resetar página para primeira
+        this.currentPageImoveis = 1;
+        
+        // Começar com todos os imóveis
+        let imoveisFiltrados = this.imoveis.slice();
+        
+        // Aplicar filtro de busca por texto
+        if (termoBusca.length > 0) {
+            imoveisFiltrados = imoveisFiltrados.filter(imovel => {
+                const matches = imovel.codigo.toLowerCase().includes(termoBusca) ||
+                               imovel.denominacao.toLowerCase().includes(termoBusca) ||
+                               imovel.local.toLowerCase().includes(termoBusca) ||
+                               (imovel.endereco && imovel.endereco.toLowerCase().includes(termoBusca));
+                
+                if (matches) {
+                    console.log('✅ Match encontrado:', imovel.codigo, imovel.denominacao);
+                }
+                return matches;
+            });
+            console.log(`🔍 Após filtro de texto: ${imoveisFiltrados.length} imóveis`);
+        }
+        
+        // Aplicar filtro de status
+        if (statusFiltro) {
+            imoveisFiltrados = imoveisFiltrados.filter(imovel => imovel.status === statusFiltro);
+            console.log(`📊 Após filtro de status '${statusFiltro}': ${imoveisFiltrados.length} imóveis`);
+        }
+        
+        // Determinar se há filtros ativos
+        const temFiltros = termoBusca.length > 0 || statusFiltro;
+        
+        // Salvar resultado dos filtros
+        this.imoveisFiltrados = temFiltros ? imoveisFiltrados : null;
+        
+        console.log('✅ Filtros aplicados com sucesso:', {
+            resultados: imoveisFiltrados.length,
+            temFiltros: temFiltros,
+            imoveisFiltradosSalvo: !!this.imoveisFiltrados
+        });
+        
+        // Atualizar tabela e estatísticas
+        this.atualizarTabelaImoveis();
+        this.atualizarEstatisticasFiltro(imoveisFiltrados.length, termoBusca, statusFiltro);
+        
+        console.log('🔍 === FILTROS APLICADOS COM SUCESSO ===');
+    }
+
+    atualizarEstatisticasFiltro(total, termo, status) {
+        console.log('📊 Atualizando estatísticas do filtro:', { total, termo, status });
+        
+        const searchStats = document.getElementById('searchStats');
+        const filteredCount = document.getElementById('filteredCount');
+        
+        const temFiltros = termo.length > 0 || status;
+        
+        if (temFiltros && searchStats && filteredCount) {
+            searchStats.style.display = 'block';
+            filteredCount.textContent = total;
+            console.log('✅ Estatísticas exibidas:', total, 'resultados');
+        } else if (searchStats) {
+            searchStats.style.display = 'none';
+            console.log('🙈 Estatísticas ocultadas');
+        }
+        
+        if (!searchStats) {
+            console.warn('⚠️ Elemento searchStats não encontrado');
+        }
+        if (!filteredCount) {
+            console.warn('⚠️ Elemento filteredCount não encontrado');
         }
     }
 
     filtrarImoveis() {
-        const filtroInput = document.getElementById('filtroImoveis');
-        const filtroStatusSelect = document.getElementById('filtroStatusImoveis');
-        
-        const termoBusca = filtroInput ? filtroInput.value.toLowerCase() : '';
-        const statusFiltro = filtroStatusSelect ? filtroStatusSelect.value : '';
-        
-        // Resetar para primeira página
-        this.currentPageImoveis = 1;
-        
-        // Aplicar filtros
-        let imoveisFiltrados = this.imoveis;
-        
-        if (termoBusca) {
-            imoveisFiltrados = imoveisFiltrados.filter(function(imovel) {
-                return imovel.codigo.toLowerCase().indexOf(termoBusca) > -1 ||
-                       imovel.denominacao.toLowerCase().indexOf(termoBusca) > -1 ||
-                       imovel.local.toLowerCase().indexOf(termoBusca) > -1 ||
-                       imovel.endereco.toLowerCase().indexOf(termoBusca) > -1;
-            });
-        }
-        
-        if (statusFiltro) {
-            imoveisFiltrados = imoveisFiltrados.filter(function(imovel) {
-                return imovel.status === statusFiltro;
-            });
-        }
-        
-        // Atualizar a propriedade temporária para paginação
-        this.imoveisFiltrados = imoveisFiltrados;
-        
-        this.atualizarTabelaImoveisFiltrados();
+        // Chamada para a nova função mais robusta
+        this.aplicarFiltros();
     }
 
     atualizarTabelaImoveisFiltrados() {
+        console.log('🔍 Atualizando tabela com filtros...');
+        
         const tbody = document.getElementById('tabelaImoveis');
-        if (!tbody) return;
+        if (!tbody) {
+            console.error('❌ Elemento tbody não encontrado');
+            return;
+        }
 
         tbody.innerHTML = '';
         
         const imoveisParaExibir = this.imoveisFiltrados || this.imoveis;
+        console.log('📊 Imóveis para exibir:', imoveisParaExibir.length);
 
         // Calcular paginação
         this.totalPaginasImoveis = Math.ceil(imoveisParaExibir.length / this.itemsPerPageImoveis);
@@ -1416,7 +1658,10 @@ ${docsPendentesTotal > 0 ? `• ${docsPendentesTotal} documentos aguardando entr
         const endIndex = startIndex + this.itemsPerPageImoveis;
         const imoveisPagina = imoveisParaExibir.slice(startIndex, endIndex);
 
-        imoveisPagina.forEach(imovel => {
+        console.log('📄 Imóveis na página:', imoveisPagina.length);
+
+        imoveisPagina.forEach((imovel, index) => {
+            console.log(`➕ Adicionando imóvel filtrado ${index + 1}:`, imovel.codigo);
             const locadoresDoImovel = this.locadores.filter(l => l.imovelId === imovel.id);
             const quantidadeLocadores = locadoresDoImovel.length;
             
@@ -1435,7 +1680,6 @@ ${docsPendentesTotal > 0 ? `• ${docsPendentesTotal} documentos aguardando entr
                         <span class="count-badge ${quantidadeLocadores === 0 ? 'zero' : quantidadeLocadores < 3 ? 'few' : 'many'}">
                             ${quantidadeLocadores}
                         </span>
-                        ${quantidadeLocadores === 0 ? '<span class="warning-icon">⚠️</span>' : ''}
                     </div>
                     ${quantidadeLocadores === 0 ? '<div class="action-warning">Nenhum locador cadastrado</div>' : ''}
                 </td>
@@ -1469,6 +1713,7 @@ ${docsPendentesTotal > 0 ? `• ${docsPendentesTotal} documentos aguardando entr
             }
         });
 
+        console.log('✅ Tabela filtrada atualizada com sucesso');
         this.atualizarPaginacaoImoveis();
         this.atualizarInfoImoveisFiltrados();
     }
@@ -1490,13 +1735,36 @@ ${docsPendentesTotal > 0 ? `• ${docsPendentesTotal} documentos aguardando entr
     }
 
     limparFiltrosImoveis() {
-        document.getElementById('filtroImoveis').value = '';
-        document.getElementById('filtroStatusImoveis').value = '';
+        console.log('🧹 === LIMPANDO FILTROS DE IMÓVEIS ===');
         
+        const filtroInput = document.getElementById('filtroImoveis');
+        const filtroSelect = document.getElementById('filtroStatusImoveis');
+        
+        if (filtroInput) {
+            filtroInput.value = '';
+            console.log('✅ Campo de busca limpo');
+        } else {
+            console.error('❌ Campo de busca não encontrado');
+        }
+        
+        if (filtroSelect) {
+            filtroSelect.value = '';
+            console.log('✅ Filtro de status limpo');
+        } else {
+            console.error('❌ Filtro de status não encontrado');
+        }
+        
+        // Limpar filtros salvos
         this.imoveisFiltrados = null;
         this.currentPageImoveis = 1;
         
+        console.log('🔄 Atualizando tabela após limpeza...');
         this.atualizarTabelaImoveis();
+        
+        // Esconder estatísticas de filtro
+        this.atualizarEstatisticasFiltro(0, '', '');
+        
+        console.log('✅ Filtros limpos com sucesso!');
     }
 
     gerarSituacaoEspecial() {
@@ -1551,6 +1819,26 @@ ${docsPendentesTotal > 0 ? `• ${docsPendentesTotal} documentos aguardando entr
     }
 }
 
+// Funções globais para teste e debug
+function testarFiltroManual() {
+    if (window.sistema) {
+        console.log('🧪 Teste manual dos filtros...');
+        window.sistema.diagnosticarFiltros();
+        window.sistema.aplicarFiltros();
+    } else {
+        console.error('❌ Sistema não inicializado');
+    }
+}
+
+function limparFiltroManual() {
+    if (window.sistema) {
+        console.log('🧹 Limpeza manual dos filtros...');
+        window.sistema.limparFiltrosImoveis();
+    } else {
+        console.error('❌ Sistema não inicializado');
+    }
+}
+
 // Funções globais para manter compatibilidade
 function abrirCentroControle() {
     alert('Centro de Controle indisponível na versão de apresentação.');
@@ -1571,6 +1859,18 @@ document.addEventListener('DOMContentLoaded', function() {
         window.sistema = new SistemaSILIC();
         console.log('SILIC 2.0 - Versão Apresentação inicializado com sucesso!');
         console.log('Imóveis carregados:', window.sistema.imoveis.length);
+        
+        // Garantir que os filtros funcionem após inicialização completa
+        setTimeout(() => {
+            console.log('🔧 Configuração final dos filtros...');
+            window.sistema.configurarFiltrosImoveisImediato();
+            
+            // Diagnóstico após configuração
+            setTimeout(() => {
+                window.sistema.diagnosticarFiltros();
+            }, 500);
+        }, 1000);
+        
     } catch (error) {
         console.error('Erro ao inicializar sistema:', error);
     }

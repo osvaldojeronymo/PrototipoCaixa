@@ -345,12 +345,24 @@ h2 {
 }
 
 .btn-warning {
+    background: linear-gradient(135deg, #28a745, #218838);
+    color: var(--color-white);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #218838, #1e7e34);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(40, 167, 69, 0.4);
+}
+
+.btn-success {
     background: linear-gradient(135deg, #ffc107, #e0a800);
     color: #212529;
     box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
 }
 
-.btn-warning:hover {
+.btn-success:hover {
     background: linear-gradient(135deg, #e0a800, #d39e00);
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(255, 193, 7, 0.4);
@@ -471,6 +483,69 @@ h2 {
     margin-right: 0.5rem;
 }
 
+/* Melhorias específicas para a seção de busca */
+.search-section input:focus {
+    border-color: #0066cc !important;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1) !important;
+    outline: none;
+}
+
+.search-section select:focus {
+    border-color: #0066cc !important;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1) !important;
+    outline: none;
+}
+
+.search-section .btn-ghost:hover {
+    background: #f8f9fa !important;
+    border-color: #0066cc !important;
+    color: #0066cc !important;
+}
+
+/* Animação para os stats */
+.search-stats {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover effects */
+.search-section .input-with-icon:hover input {
+    border-color: #0066cc;
+}
+
+.search-section .select-wrapper:hover select {
+    border-color: #0066cc;
+}
+
+/* Responsividade para busca */
+@media (max-width: 768px) {
+    .search-body {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+    
+    .search-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem;
+    }
+    
+    .search-header button {
+        align-self: stretch;
+        text-align: center;
+    }
+}
+
 /* === MELHORIAS RESPONSIVAS === */
 @media (max-width: 768px) {
     .search-body {
@@ -500,7 +575,6 @@ h2 {
     }
 }
 
-/* === FILTROS E BUSCA MODERNOS === */
 .search-filters {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
     padding: 2rem !important;
@@ -755,19 +829,10 @@ h2 {
     border: 1px solid #c3e6cb;
 }
 
-.status-badge.ativo::before {
-    content: '✓';
-    font-weight: bold;
-}
-
 .status-badge.em-prospecção {
     background: #fff3cd;
     color: #856404;
     border: 1px solid #ffeaa7;
-}
-
-.status-badge.em-prospecção::before {
-    content: '🔍';
 }
 
 .status-badge.em-mobilização {
@@ -776,28 +841,16 @@ h2 {
     border: 1px solid #bee5eb;
 }
 
-.status-badge.em-mobilização::before {
-    content: '🔄';
-}
-
 .status-badge.em-desmobilização {
     background: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
 }
 
-.status-badge.em-desmobilização::before {
-    content: '⏳';
-}
-
 .status-badge.desativado {
     background: #e2e3e5;
     color: #383d41;
     border: 1px solid #d6d8db;
-}
-
-.status-badge.desativado::before {
-    content: '❌';
 }
 
 /* === MELHORIAS GERAIS === */
@@ -1601,4 +1654,79 @@ h2 {
         text-align: center;
         gap: 0.25rem;
     }
+}
+
+/* Melhorias de UX para o formulário */
+.form-imovel-expandido {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-section {
+    transition: all 0.2s ease;
+}
+
+.form-section:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+}
+
+.form-header {
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 1rem;
+}
+
+/* Responsividade melhorada */
+@media (max-width: 768px) {
+    .form-imovel-expandido {
+        padding: 1rem;
+    }
+    
+    .form-section {
+        padding: 1rem;
+    }
+    
+    .form-imovel-expandido [style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .form-imovel-expandido [style*="grid-template-columns: 1fr 2fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .form-imovel-expandido [style*="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem"] {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Botão integrado no input */
+.form-group input[type="text"] + button {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+    line-height: 1.2;
+}
+
+/* Animação para form hints */
+.form-hint {
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.form-group:hover .form-hint {
+    opacity: 1;
 }
