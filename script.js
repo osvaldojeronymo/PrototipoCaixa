@@ -389,134 +389,47 @@ class SistemaSILIC {
         return this.locadores.filter(l => l.imovelId === imovelId).length;
     }
 
-    verificarImoveisComStatusInconsistente() {
-        const imoveisInconsistentes = [];
+    // Versão completa da validação para auditoria
+    validarRegraStatusImovelCompleta(status, imovelId = null, imovel = null) {
+        // Regra: Imóvel "Ativo" deve ter pelo menos 1 locador
+        if (status === 'Ativo') {
+            const locadoresDoImovel = this.locadores.filter(l => l.imovelId === imovelId);
+            if (locadoresDoImovel.length === 0) {
+                return {
+                    valido: false,
+                    mensagem: 'Imóvel ativo deve ter pelo menos um locador vinculado'
+                };
+            }
+        }
         
-        this.imoveis.forEach(imovel => {
-            const qtdLocadores = this.contarLocadoresPorImovel(imovel.id);
-            
-            // Regra: Imóvel Ativo deve ter locadores
-            if (imovel.status === 'Ativo' && qtdLocadores === 0) {
-                imoveisInconsistentes.push({
-                    imovel: imovel,
-                    problema: 'Imóvel ativo sem locadores',
-                    sugestao: 'Adicionar locadores ou alterar status para "Em prospecção"'
+        // Outras validações podem ser adicionadas aqui
+        return { valido: true };
+    }
+
+    // Calcular progresso médio de documentação
+    calcularProgressoDocumentacao(locadores) {
+        if (!locadores || locadores.length === 0) return 0;
+        
+        let totalDocs = 0;
+        let docsEntregues = 0;
+        
+        locadores.forEach(locador => {
+            if (locador.documentos) {
+                Object.values(locador.documentos).forEach(status => {
+                    if (status !== null) {
+                        totalDocs++;
+                        if (status === 'entregue') {
+                            docsEntregues++;
+                        }
+                    }
                 });
             }
         });
         
-        return imoveisInconsistentes;
+        return totalDocs > 0 ? Math.round((docsEntregues / totalDocs) * 100) : 0;
     }
 
-    exibirAlertsRegraDeNegocio() {
-        const inconsistentes = this.verificarImoveisComStatusInconsistente();
-        
-        if (inconsistentes.length > 0) {
-            console.warn('⚠️ Imóveis com status inconsistente encontrados:', inconsistentes);
-            
-            // Criar um alerta visual discreto
-            this.criarAlertaStatusInconsistente(inconsistentes);
-        }
-    }
-
-    criarAlertaStatusInconsistente(inconsistentes) {
-        // Remove alertas existentes
-        const alertasExistentes = document.querySelectorAll('.alerta-status-inconsistente');
-        alertasExistentes.forEach(alerta => alerta.remove());
-
-        // Criar novo alerta
-        const alerta = document.createElement('div');
-        alerta.className = 'alerta-status-inconsistente';
-        alerta.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
-            border: 2px solid #ffca28;
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
-            box-shadow: 0 4px 20px rgba(255, 193, 7, 0.3);
-            z-index: 1000;
-            max-width: 400px;
-            font-family: system-ui, sans-serif;
-        `;
-
-        alerta.innerHTML = `
-            <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
-                <span style="font-size: 1.5rem; color: #f57c00;">⚠️</span>
-                <div style="flex: 1;">
-                    <div style="font-weight: 600; color: #e65100; margin-bottom: 0.5rem;">
-                        Atenção: Regra de Negócio
-                    </div>
-                    <div style="color: #5d4037; font-size: 0.9rem; margin-bottom: 0.75rem;">
-                        ${inconsistentes.length} imóvel(is) ativo(s) sem locadores vinculados.
-                        <br><small>Imóveis ativos devem ter pelo menos 1 locador.</small>
-                    </div>
-                    <button id="btnVerInconsistencias" style="
-                        background: #ff9800;
-                        color: white;
-                        border: none;
-                        padding: 0.5rem 1rem;
-                        border-radius: 6px;
-                        font-size: 0.85rem;
-                        cursor: pointer;
-                        font-weight: 500;
-                        margin-right: 0.5rem;
-                    ">Ver Detalhes</button>
-                    <button id="btnFecharAlerta" style="
-                        background: transparent;
-                        color: #5d4037;
-                        border: 1px solid #8d6e63;
-                        padding: 0.5rem 1rem;
-                        border-radius: 6px;
-                        font-size: 0.85rem;
-                        cursor: pointer;
-                    ">Fechar</button>
-                </div>
-            </div>
-        `;
-
-        document.body.appendChild(alerta);
-
-        // Event listeners
-        document.getElementById('btnFecharAlerta').addEventListener('click', () => {
-            alerta.remove();
-        });
-
-        document.getElementById('btnVerInconsistencias').addEventListener('click', () => {
-            this.mostrarDetalhesInconsistencias(inconsistentes);
-            alerta.remove();
-        });
-
-        // Auto-remover após 15 segundos
-        setTimeout(() => {
-            if (alerta.parentNode) {
-                alerta.remove();
-            }
-        }, 15000);
-    }
-
-    mostrarDetalhesInconsistencias(inconsistentes) {
-        let detalhes = "📋 RELATÓRIO DE INCONSISTÊNCIAS\n\n";
-        detalhes += "Imóveis ativos sem locadores vinculados:\n\n";
-        
-        inconsistentes.forEach((item, index) => {
-            detalhes += `${index + 1}. Código: ${item.imovel.codigo}\n`;
-            detalhes += `   Denominação: ${item.imovel.denominacao}\n`;
-            detalhes += `   Status: ${item.imovel.status}\n`;
-            detalhes += `   Problema: ${item.problema}\n`;
-            detalhes += `   Sugestão: ${item.sugestao}\n\n`;
-        });
-
-        detalhes += "💡 AÇÃO RECOMENDADA:\n";
-        detalhes += "• Adicione locadores aos imóveis ativos, ou\n";
-        detalhes += "• Altere o status para 'Em prospecção'\n\n";
-        detalhes += "Esta validação garante a integridade dos dados do sistema.";
-
-        alert(detalhes);
-    }
-
-    adicionarImovel() {
+    gerarImovel() {
         const codigo = document.getElementById('codigoEdificio').value;
         const denominacao = document.getElementById('denominacaoEdificio').value;
         const local = document.getElementById('localCidade').value;
@@ -854,6 +767,9 @@ class SistemaSILIC {
         // Atualizar tabela
         this.atualizarTabelaImoveis();
         
+        // Restaurar array original
+        this.imoveis = this.imoveisOriginais;
+        
         // Atualizar informações da tabela
         this.atualizarInfoResultados(imoveisFiltrados.length);
     }
@@ -889,17 +805,8 @@ class SistemaSILIC {
             searchStats.style.display = 'none';
         }
         
-        // Restaurar array original se existe
-        if (this.imoveisOriginais) {
-            this.imoveis = [...this.imoveisOriginais];
-            this.imoveisOriginais = null;
-        }
-        
-        // Recalcular paginação
-        this.totalPaginasImoveis = Math.ceil(this.imoveis.length / this.itemsPerPageImoveis);
-        this.currentPageImoveis = 1;
-        
         // Atualizar tabela com todos os imóveis
+        this.currentPageImoveis = 1;
         this.atualizarTabelaImoveis();
         this.atualizarInfoResultados(this.imoveis.length);
         
@@ -1563,21 +1470,32 @@ class SistemaSILIC {
     executarAuditoriaCompleta() {
         console.log('🔍 === INICIANDO AUDITORIA COMPLETA ===');
         
-        const relatorioAuditoria = {
-            timestamp: new Date().toISOString(),
-            resumo: {
-                totalImoveis: this.imoveis.length,
-                totalLocadores: this.locadores.length,
-                imoveisComProblemas: 0,
-                locadoresComProblemas: 0
-            },
-            problemas: [],
-            estatisticas: {},
-            recomendacoes: []
-        };
+        try {
+            // Verificar se há dados
+            if (!this.imoveis || this.imoveis.length === 0) {
+                console.log('⚠️ Nenhum imóvel encontrado, carregando dados demo...');
+                this.carregarDadosDemo();
+            }
+            
+            console.log('📊 Dados disponíveis: ' + this.imoveis.length + ' imóveis, ' + this.locadores.length + ' locadores');
+            
+            const relatorioAuditoria = {
+                timestamp: new Date().toISOString(),
+                resumo: {
+                    totalImoveis: this.imoveis.length,
+                    totalLocadores: this.locadores.length,
+                    imoveisComProblemas: 0,
+                    locadoresComProblemas: 0
+                },
+                problemas: [],
+                estatisticas: {},
+                recomendacoes: []
+            };
 
-        // Auditoria por Status
-        const statusCount = {};
+            console.log('✅ Relatório inicializado');
+
+            // Auditoria por Status
+            const statusCount = {};
         this.imoveis.forEach(imovel => {
             const status = imovel.status;
             statusCount[status] = (statusCount[status] || 0) + 1;
@@ -1652,6 +1570,12 @@ class SistemaSILIC {
         this.exibirRelatorioAuditoria(relatorioAuditoria);
         
         return relatorioAuditoria;
+        
+        } catch (error) {
+            console.error('❌ Erro durante auditoria:', error);
+            alert('❌ Erro ao executar auditoria: ' + error.message + '\nVerifique o console para mais detalhes.');
+            throw error;
+        }
     }
     
     exibirRelatorioAuditoria(relatorio) {
@@ -1696,153 +1620,17 @@ class SistemaSILIC {
             texto += `✅ SISTEMA EM CONFORMIDADE\nTodos os imóveis e locadores atendem às regras de negócio.`;
         }
         
-        alert(texto);
-    }
-
-    // FUNÇÕES DE FILTRO DE IMÓVEIS
-    configurarFiltrosImoveisImediato() {
-        console.log('🔧 Configurando filtros de imóveis...');
+        // Usar console.log para depuração e alert para resultado
+        console.log('📋 RELATÓRIO COMPLETO DE AUDITORIA:');
+        console.log(texto);
         
-        // Campo de busca de texto
-        const filtroInput = document.getElementById('filtroImoveis');
-        if (filtroInput) {
-            filtroInput.addEventListener('input', (e) => {
-                console.log('🔍 Filtro de texto alterado:', e.target.value);
-                this.filtrarImoveis();
-            });
-        } else {
-            console.warn('⚠️ Campo filtroImoveis não encontrado');
-        }
-
-        // Filtro de status
-        const filtroStatus = document.getElementById('filtroStatusImoveis');
-        if (filtroStatus) {
-            filtroStatus.addEventListener('change', (e) => {
-                console.log('🏷️ Filtro de status alterado:', e.target.value);
-                this.filtrarImoveis();
-            });
-        } else {
-            console.warn('⚠️ Campo filtroStatusImoveis não encontrado');
-        }
-
-        // Botão limpar filtros
-        const btnLimpar = document.getElementById('btnLimparFiltros');
-        if (btnLimpar) {
-            btnLimpar.addEventListener('click', () => {
-                console.log('🗑️ Limpando filtros de imóveis');
-                this.limparFiltrosImoveis();
-            });
-        } else {
-            console.warn('⚠️ Botão btnLimparFiltros não encontrado');
-        }
-
-        console.log('✅ Filtros de imóveis configurados');
-    }
-
-    filtrarImoveis() {
-        console.log('🔍 Executando filtro de imóveis...');
+        // Alert com versão resumida para não sobrecarregar
+        const resumo = `📋 AUDITORIA CONCLUÍDA - ${new Date().toLocaleString('pt-BR')}\n\n` +
+                      `📊 RESUMO: ${relatorio.resumo.totalImoveis} imóveis, ${relatorio.resumo.totalLocadores} locadores\n` +
+                      `🚨 Problemas: ${relatorio.resumo.imoveisComProblemas} imóveis, ${relatorio.resumo.locadoresComProblemas} locadores\n\n` +
+                      `✅ Relatório completo disponível no console do navegador (F12)`;
         
-        const textoFiltro = document.getElementById('filtroImoveis')?.value.toLowerCase().trim() || '';
-        const statusFiltro = document.getElementById('filtroStatusImoveis')?.value || '';
-        
-        console.log('📝 Filtros aplicados:', { texto: textoFiltro, status: statusFiltro });
-        
-        // Filtrar imóveis baseado nos critérios
-        let imoveisFiltrados = this.imoveis.filter(imovel => {
-            let passaTexto = true;
-            let passaStatus = true;
-            
-            // Filtro por texto (código, denominação ou local)
-            if (textoFiltro) {
-                passaTexto = 
-                    imovel.codigo.toLowerCase().includes(textoFiltro) ||
-                    imovel.denominacao.toLowerCase().includes(textoFiltro) ||
-                    imovel.local.toLowerCase().includes(textoFiltro);
-            }
-            
-            // Filtro por status
-            if (statusFiltro) {
-                passaStatus = imovel.status === statusFiltro;
-            }
-            
-            return passaTexto && passaStatus;
-        });
-
-        console.log(`📊 Resultados: ${imoveisFiltrados.length} de ${this.imoveis.length} imóveis`);
-        
-        // Mostrar estatísticas de busca
-        this.mostrarEstatisticasBusca(imoveisFiltrados.length);
-        
-        // Atualizar tabela com resultados filtrados
-        this.atualizarTabelaImoveisFiltrados(imoveisFiltrados);
-    }
-
-    mostrarEstatisticasBusca(resultados) {
-        const searchStats = document.getElementById('searchStats');
-        const filteredCount = document.getElementById('filteredCount');
-        
-        if (searchStats && filteredCount) {
-            filteredCount.textContent = resultados;
-            searchStats.style.display = 'block';
-        }
-    }
-
-    atualizarTabelaImoveisFiltrados(imoveisFiltrados) {
-        console.log('🔄 Atualizando tabela com imóveis filtrados...');
-        
-        // Resetar para primeira página quando filtrar
-        this.currentPageImoveis = 1;
-        
-        // Atualizar array de imóveis temporariamente para paginação
-        const imoveisOriginais = this.imoveis;
-        this.imoveis = imoveisFiltrados;
-        
-        // Atualizar tabela
-        this.atualizarTabelaImoveis();
-        
-        // Restaurar array original
-        this.imoveis = imoveisOriginais;
-        
-        // Atualizar informações da tabela
-        this.atualizarInfoResultados(imoveisFiltrados.length);
-    }
-
-    atualizarInfoResultados(totalFiltrados) {
-        const infoElement = document.getElementById('imoveisResultadosInfo');
-        if (infoElement) {
-            const infoText = infoElement.querySelector('.info-text');
-            if (infoText) {
-                if (totalFiltrados === this.imoveis.length) {
-                    infoText.textContent = `Exibindo ${totalFiltrados} imóveis`;
-                } else {
-                    infoText.textContent = `Exibindo ${totalFiltrados} de ${this.imoveis.length} imóveis (filtrados)`;
-                }
-            }
-        }
-    }
-
-    limparFiltrosImoveis() {
-        console.log('🗑️ Limpando filtros de imóveis...');
-        
-        // Limpar campos de filtro
-        const filtroInput = document.getElementById('filtroImoveis');
-        const filtroStatus = document.getElementById('filtroStatusImoveis');
-        
-        if (filtroInput) filtroInput.value = '';
-        if (filtroStatus) filtroStatus.value = '';
-        
-        // Esconder estatísticas de busca
-        const searchStats = document.getElementById('searchStats');
-        if (searchStats) {
-            searchStats.style.display = 'none';
-        }
-        
-        // Atualizar tabela com todos os imóveis
-        this.currentPageImoveis = 1;
-        this.atualizarTabelaImoveis();
-        this.atualizarInfoResultados(this.imoveis.length);
-        
-        console.log('✅ Filtros limpos');
+        alert(resumo);
     }
 }
 
