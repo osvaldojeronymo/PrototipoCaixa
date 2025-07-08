@@ -11,11 +11,17 @@ Se o repositório for público, basta enviar a URL:
 https://github.com/osvaldojeronymo/PrototipoCaixa
 ```
 
-### Opção 2: Download Direto (Mais Rápido)
+### Opção 2: Acesso Direto à Versão Principal
+```
+https://github.com/osvaldojeronymo/PrototipoCaixa/tree/master/show
+```
+*Acesse a pasta `show` que contém a versão principal*
+
+### Opção 3: Download Direto (Mais Rápido)
 ```
 https://github.com/osvaldojeronymo/PrototipoCaixa/archive/refs/heads/master.zip
 ```
-*Baixe, extraia e abra `index.html` no navegador*
+*Baixe, extraia e abra `show/index.html` no navegador*
 
 ### Opção 3: GitHub Pages (Demo Online)
 ```
@@ -79,7 +85,7 @@ cd PrototipoCaixa/silic-imoveis
 ### Para Clonar o Repositório:
 ```bash
 git clone https://github.com/osvaldojeronymo/PrototipoCaixa.git
-cd PrototipoCaixa
+cd PrototipoCaixa/show
 ```
 
 ### Para Executar o Projeto:
@@ -107,16 +113,19 @@ cd PrototipoCaixa
 ### Estrutura do Projeto:
 ```
 PrototipoCaixa/
-├── index.html          # Página principal do sistema
-├── script.js           # Lógica principal e funções
-├── style.css           # Estilos e layout CAIXA
-├── logo-caixa.svg      # Logo institucional
-├── README.md           # Documentação do projeto
-├── COMPARTILHAR.md     # Este guia
-└── silic-v2.0-imoveis/ # Versão alternativa
-    ├── index.html
-    ├── script.js
-    └── style.css
+├── README.md                    # Documentação principal
+├── COMPARTILHAR.md              # Este guia
+├── EMAIL-TEMPLATE.md            # Template de email
+├── VERIFICACAO-COMPARTILHAMENTO.md # Checklist
+├── show/                        # 🎯 VERSÃO PRINCIPAL
+│   ├── index.html               # Sistema principal
+│   ├── script.js                # Lógica completa (2000+ linhas)
+│   ├── style.css                # Estilos padrão CAIXA
+│   ├── logo-caixa.svg           # Logo institucional
+│   ├── README.md                # Instruções da versão principal
+│   ├── silic-imoveis/           # Versão alternativa 1
+│   └── silic-v2.0-imoveis/      # Versão alternativa 2
+└── [arquivos de desenvolvimento] # Testes, debug, etc.
 ```
 
 ## 🔧 Funcionalidades Implementadas

@@ -1,0 +1,33 @@
+# Arquivos de teste e backup
+teste-*.html
+teste_*.html
+test-*.html
+*-backup.html
+button-functions.js
+fix_filtros.js
+teste-script.js
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+# Logs
+*.log
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node modules (se houver)
+node_modules/
+npm-debug.log*
+
+# Arquivos de build (se houver)
+dist/
+build/

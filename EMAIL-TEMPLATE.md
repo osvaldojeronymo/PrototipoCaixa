@@ -12,15 +12,19 @@ O protótipo do Sistema SILIC 2.0 está finalizado e pronto para desenvolvimento
 🔗 **REPOSITÓRIO GITHUB:**
 https://github.com/osvaldojeronymo/PrototipoCaixa
 
+🎯 **VERSÃO PRINCIPAL:**
+https://github.com/osvaldojeronymo/PrototipoCaixa/tree/master/show
+
 📥 **DOWNLOAD DIRETO (RECOMENDADO):**
 https://github.com/osvaldojeronymo/PrototipoCaixa/archive/refs/heads/master.zip
 
 ⚡ **TESTE RÁPIDO:**
 1. Clique no link "DOWNLOAD DIRETO" acima
 2. Extraia o arquivo ZIP baixado
-3. Execute: python -m http.server 8000 (na pasta extraída)
-4. Abra: http://localhost:8000
-5. ✅ Sistema funcionando com dados realistas!
+3. Navegue até a pasta "show"
+4. Execute: python -m http.server 8000 (na pasta show)
+5. Abra: http://localhost:8000
+6. ✅ Sistema funcionando com dados realistas!
 
 📋 **FUNCIONALIDADES IMPLEMENTADAS:**
 ✅ Gestão completa de locadores (PF/PJ)
@@ -40,15 +44,15 @@ https://github.com/osvaldojeronymo/PrototipoCaixa/archive/refs/heads/master.zip
 - Deploy em ambiente de produção
 
 📂 **ESTRUTURA DO PROJETO:**
-- index.html: Página principal
-- script.js: Lógica do sistema (2000+ linhas)
-- style.css: Estilos padrão CAIXA
-- Documentação completa incluída
+- show/index.html: Página principal (VERSÃO PRINCIPAL)
+- show/script.js: Lógica do sistema (2000+ linhas)
+- show/style.css: Estilos padrão CAIXA
+- Documentação completa na raiz
 
 🔧 **CONFIGURAÇÃO PARA DESENVOLVIMENTO:**
 ```bash
 git clone https://github.com/osvaldojeronymo/PrototipoCaixa.git
-cd PrototipoCaixa
+cd PrototipoCaixa/show
 python -m http.server 8000
 # Abrir: http://localhost:8000
 ```

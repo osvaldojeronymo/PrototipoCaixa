@@ -1,150 +1,123 @@
-# SILIC 2.0 - CAIXA - Versão de Apresentação
+# 🏢 SILIC 2.0 - Sistema de Locação de Imóveis CAIXA
 
-## 📋 Descrição
-Esta é a versão de apresentação do protótipo SILIC 2.0 (Sistema de Locação de Imóveis CAIXA), desenvolvida especificamente para demonstrações e validação de conceitos.
+## 📁 Estrutura do Repositório
 
-## 🎯 Características da Versão
+```
+PrototipoCaixa/
+├── README.md                    # Este arquivo
+├── COMPARTILHAR.md              # Guia de compartilhamento
+├── EMAIL-TEMPLATE.md            # Template de email
+├── VERIFICACAO-COMPARTILHAMENTO.md # Checklist de verificação
+├── show/                        # 🎯 VERSÃO PRINCIPAL
+│   ├── index.html               # Sistema principal
+│   ├── script.js                # Lógica completa
+│   ├── style.css                # Estilos CAIXA
+│   ├── logo-caixa.svg           # Logo institucional
+│   ├── silic-imoveis/           # Versão alternativa 1
+│   └── silic-v2.0-imoveis/      # Versão alternativa 2
+└── [arquivos de desenvolvimento] # Testes e arquivos auxiliares
+```
 
-### 📊 Base de Dados
-- **100 imóveis** exatamente, com distribuição realista por status:
-  - 65 Ativos (65%)
-  - 15 Em prospecção (15%)
-  - 10 Em mobilização (10%)
-  - 8 Em desmobilização (8%)
-  - 2 Desativado (2%)
+## 🚀 Como Usar
 
-### 🏢 Logo e Identidade Visual
-- Logo oficial da CAIXA (`logo-caixa.svg`)
-- Cores e padrões visuais seguindo identidade da CAIXA
-- Interface moderna e responsiva
+### 📱 Demonstração Rápida
+**Acesse diretamente:** https://github.com/osvaldojeronymo/PrototipoCaixa/tree/master/show
 
-### 🔍 Funcionalidades de Busca e Filtro
+### 💻 Instalação Local
+```bash
+# Clonar repositório
+git clone https://github.com/osvaldojeronymo/PrototipoCaixa.git
+cd PrototipoCaixa/show
 
-#### Para Imóveis:
-- Busca em tempo real por código, denominação ou local
-- Filtro por status do imóvel
-- Paginação inteligente
-- Botão "Limpar Filtros"
+# Executar servidor local
+python -m http.server 8000
 
-#### Para Locadores:
-- Busca por nome
-- Filtro por tipo (Pessoa Física/Jurídica)
-- Filtro por status de documentação
-- Visualização em tabela ou cards
+# Abrir no navegador
+# http://localhost:8000
+```
 
-### 👥 Regras de Negócio Implementadas
+### 📥 Download Direto
+```
+https://github.com/osvaldojeronymo/PrototipoCaixa/archive/refs/heads/master.zip
+```
+*Extrair e abrir: `show/index.html`*
 
-#### Locadores por Status:
-- **Apenas** imóveis com status "Em prospecção" ou "Em mobilização" podem não ter locadores
-- Todos os demais status devem ter pelo menos 1 locador vinculado
-- Distribuição realista: 1 a 3 locadores por imóvel
+## ✨ Funcionalidades
 
-### 📄 Documentação Completa
+### 🏠 Gestão de Imóveis
+- ✅ **CRUD Completo:** Criar, ler, atualizar e deletar imóveis
+- ✅ **Dados Realistas:** 100+ imóveis pré-cadastrados
+- ✅ **Filtros Avançados:** Por status, região, código, denominação
+- ✅ **Dashboard:** Métricas em tempo real
+- ✅ **Validações:** Códigos SIPGE/SAP, CEPs, datas
 
-#### A. Documentação do(s) Locador(es)
+### 👥 Gestão de Locadores
+- ✅ **Pessoas Físicas:** CPF válido, documentos obrigatórios
+- ✅ **Pessoas Jurídicas:** CNPJ válido, documentos empresariais
+- ✅ **Vinculação:** Locadores por imóvel
+- ✅ **Auditoria:** Status de documentação
 
-##### I. Pessoa Física:
-- Documento de Identidade (CNH, RG, CPF, Passaporte, Carteira Profissional)
-- Documento de Identidade do cônjuge (quando aplicável)
-- Certidão Negativa de Débitos (CND/CPEND)
-- Comprovante de Renda
-- Comprovante de Residência
-- Declaração de IR
-- Carteira de Trabalho
-- Certidão de Nascimento/Casamento
-- Comprovante Bancário
-- Declaração de Bens
-- Ficha Cadastral
+### 🔍 Sistema de Auditoria
+- ✅ **Validação Completa:** Regras de negócio implementadas
+- ✅ **Relatórios:** Status detalhado por imóvel
+- ✅ **Métricas:** Progresso de documentação
+- ✅ **Alertas:** Documentos pendentes e inconsistências
 
-##### II. Pessoa Jurídica:
-- CNPJ
-- Contrato Social e alterações
-- Certidão simplificada da Junta Comercial
-- Certidão Negativa de Débitos (CND/CPEND)
-- Certidão de regularidade do FGTS
-- Inscrição Estadual
-- Certidões Negativas (Federal, Estadual, Municipal)
-- Balanço Patrimonial
-- DRE - Demonstração do Resultado
-- Declaração de Idoneidade
-- Comprovante de Endereço da Empresa
-- Ata de Nomeação de Diretoria
-- Cartão CNPJ
+### 🎨 Interface
+- ✅ **Padrão CAIXA:** Visual institucional
+- ✅ **Responsivo:** Funciona em desktop e mobile
+- ✅ **Moderno:** Bootstrap-like, componentes customizados
+- ✅ **Acessível:** Navegação clara e intuitiva
 
-##### III. Documentação do Representante Legal:
-- Instrumento jurídico de poderes (Procuração)
-- Documento de Identidade do Procurador
-- Comprovante de Residência do Representante
-- Termo de Responsabilidade
+## 🔧 Tecnologias
 
-#### B. Documentação do Imóvel:
-- Matrícula do Imóvel (até 60 dias)
-- Certidão negativa de IPTU
-- Averbação/Habite-se
-- Permissão para atividade bancária
-- Manifestação CILOG
-- Escritura do Imóvel
-- Planta do Imóvel
-- Alvará de Funcionamento
-- Laudo de Avaliação
-- Certidão de Regularidade Urbana
-- Memorial Descritivo
+- **Frontend:** HTML5, CSS3, JavaScript ES6+
+- **Dados:** LocalStorage (simulação de banco)
+- **UI/UX:** Design System CAIXA
+- **Validações:** CPF/CNPJ, CEP, datas, regras de negócio
 
-### 📈 Status de Documentos
-- **Entregue** ✅ - Documento completo e validado
-- **Pendente** ⚠️ - Aguardando entrega
-- **Em Análise** 🔍 - Documento em processo de validação
-- **Rejeitado** ❌ - Documento rejeitado, precisa reenvio
+## 📊 Status do Projeto
 
-### 🎨 Interface e Usabilidade
-- Dashboard com estatísticas em tempo real
-- Tabelas com paginação inteligente
-- Modal de detalhes completos do imóvel
-- Badges coloridos para status
-- Filtros em tempo real
-- Design responsivo
-- Ícones intuitivos
+| Funcionalidade | Status | Observações |
+|---|---|---|
+| Gestão de Imóveis | ✅ Completo | CRUD funcional |
+| Gestão de Locadores | ✅ Completo | PF e PJ |
+| Filtros e Busca | ✅ Completo | Texto e status |
+| Auditoria de Dados | ✅ Completo | Validações implementadas |
+| Interface CAIXA | ✅ Completo | Padrão visual |
+| Integração SIPGE/SAP | 🚧 Interface | Simulado (pronto para integração) |
+| Consulta Pública | 🚧 Interface | Simulado (pronto para integração) |
 
-### 🚀 Funcionalidades Especiais
-- **Auditoria de Dados**: Relatório completo do sistema
-- **Busca no SIPGE/SAP**: Interface preparada para integração
-- **Gestão de Documentos**: Upload e controle visual de status
-- **Notificações Visuais**: Alertas para imóveis sem locadores
-- **Exportação**: Preparado para relatórios
+## 🚀 Próximos Passos
 
-## 🛠️ Tecnologias
-- HTML5 semântico
-- CSS3 com variáveis customizadas
-- JavaScript ES6+ (Classes, Arrow Functions, Async/Await)
-- Design responsivo
-- Padrões de acessibilidade
+### Para Desenvolvedores:
+1. **Integração Real:** Conectar com APIs SIPGE/SAP
+2. **Banco de Dados:** Migrar de LocalStorage para BD real
+3. **Autenticação:** Sistema de login e permissões
+4. **Deploy:** Ambiente de produção
 
-## 📱 Compatibilidade
-- Navegadores modernos (Chrome, Firefox, Safari, Edge)
-- Dispositivos desktop, tablet e mobile
-- Suporte a leitores de tela
-- Performance otimizada
+### Para Testes:
+1. **Acesse:** `show/index.html` (versão principal)
+2. **Teste:** Cadastro de imóveis e locadores
+3. **Valide:** Filtros e sistema de auditoria
+4. **Reporte:** Bugs ou sugestões via Issues
 
-## 🎯 Objetivos da Demonstração
-1. Validar fluxo de trabalho completo
-2. Demonstrar capacidade de gestão de grandes volumes
-3. Mostrar interface intuitiva e profissional
-4. Validar regras de negócio específicas da CAIXA
-5. Testar usabilidade e performance
+## 📞 Suporte
 
-## 📝 Dados de Demonstração
-Todos os dados são gerados automaticamente e incluem:
-- Nomes realistas de pessoas e empresas
-- Endereços válidos de cidades brasileiras
-- CPFs e CNPJs com dígitos verificadores corretos
-- Distribuição estatística representativa
-- Situações diversas de documentação
-- Cenários complexos (representantes legais, múltiplos locadores, etc.)
+- **Issues:** https://github.com/osvaldojeronymo/PrototipoCaixa/issues
+- **Documentação:** Ver arquivos `.md` na raiz
+- **Demo:** Pasta `show/` contém versão funcional
 
-## 🔐 Segurança
-Esta versão é apenas para demonstração e não contém dados reais ou sensíveis.
+## 📋 Para Compartilhar
+
+Use o template em `EMAIL-TEMPLATE.md` ou envie diretamente:
+
+**URL do Projeto:** https://github.com/osvaldojeronymo/PrototipoCaixa  
+**Versão Principal:** https://github.com/osvaldojeronymo/PrototipoCaixa/tree/master/show  
+**Download:** https://github.com/osvaldojeronymo/PrototipoCaixa/archive/refs/heads/master.zip
 
 ---
 
-**Desenvolvido para CAIXA Econômica Federal**  
-*Versão de Apresentação - Janeiro 2025*
+**📅 Última Atualização:** Janeiro 2025  
+**🏷️ Versão:** 2.0  
+**✅ Status:** Pronto para desenvolvimento colaborativo
