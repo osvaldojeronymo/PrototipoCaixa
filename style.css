@@ -444,7 +444,7 @@ h2 {
 }
 
 .form-hint::before {
-    content: '💡';
+    content: '';
     font-size: 1rem;
     margin-right: 0.25em;
 }
@@ -732,7 +732,7 @@ h2 {
 }
 
 .form-hint::before {
-    content: '💡';
+    content: '';
     font-size: 1rem;
     margin-right: 0.25em;
 }

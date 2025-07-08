@@ -82,14 +82,14 @@
             <!-- Formulário Expandido para Imóveis (Inicialmente Oculto) -->
             <div class="form-imovel-expandido" id="formularioImovel" style="background: #f8f9fa; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; display: none; border: 1px solid #e9ecef;">
                 <div class="form-header" style="margin-bottom: 2rem; text-align: center;">
-                    <h3 style="margin: 0 0 0.5rem 0; color: #0066cc; font-size: 1.5rem;">🏢 Cadastro de Edifício</h3>
+                    <h3 style="margin: 0 0 0.5rem 0; color: #0066cc; font-size: 1.5rem;">Cadastro de Edifício</h3>
                     <p style="margin: 0; color: #6c757d; font-size: 0.9rem;">Preencha os dados do imóvel para cadastro no sistema</p>
                 </div>
                 
                 <!-- Seção 1: Informações Básicas -->
                 <div class="form-section" style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #0066cc;">
                     <h4 style="margin: 0 0 1rem 0; color: #0066cc; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <span>🏢</span> Informações Básicas
+                        Informações Básicas
                     </h4>
                     
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
@@ -127,7 +127,7 @@
                 <!-- Seção 2: Localização -->
                 <div class="form-section" style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #28a745;">
                     <h4 style="margin: 0 0 1rem 0; color: #28a745; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <span>📍</span> Localização
+                        Localização
                     </h4>
                     
                     <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 1rem;">
@@ -154,7 +154,7 @@
                     <!-- Validade do Objeto -->
                     <div class="form-section" style="background: white; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #17a2b8;">
                         <h4 style="margin: 0 0 1rem 0; color: #17a2b8; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <span>📅</span> Validade do Objeto
+                            Validade do Objeto
                         </h4>
                         
                         <div style="display: grid; gap: 1rem;">
@@ -175,7 +175,7 @@
                     <!-- Impostos e Tributos -->
                     <div class="form-section" style="background: white; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #ffc107;">
                         <h4 style="margin: 0 0 1rem 0; color: #e0a800; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <span>🏛️</span> Impostos e Tributos
+                            Impostos e Tributos
                         </h4>
                         
                         <div style="display: grid; gap: 1rem;">
@@ -197,10 +197,10 @@
                 <!-- Ações do Formulário -->
                 <div class="form-actions" style="display: flex; gap: 1rem; justify-content: flex-end; padding-top: 1rem; border-top: 1px solid #e9ecef;">
                     <button type="button" id="limparFormulario" class="btn btn-secondary btn-compact" style="padding: 0.75rem 1.5rem;">
-                        <span>🗑️</span> Limpar
+                        Limpar
                     </button>
                     <button type="button" id="adicionarImovel" class="btn btn-primary btn-compact" style="padding: 0.75rem 1.5rem;">
-                        <span>💾</span> Cadastrar Imóvel
+                        Cadastrar Imóvel
                     </button>
                 </div>
             </div>
@@ -209,11 +209,10 @@
             <div class="search-section" style="background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e9ecef;">
                 <div class="search-header" style="display: flex; align-items: center; justify-content: between; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e9ecef;">
                     <div style="display: flex; align-items: center; gap: 0.75rem;">
-                        <span style="font-size: 1.25rem;">🔍</span>
                         <h3 style="margin: 0; color: #0066cc; font-size: 1.2rem; font-weight: 600;">Buscar e Filtrar Imóveis</h3>
                     </div>
                     <button class="btn btn-ghost btn-sm btn-compact" onclick="sistema.limparFiltrosImoveis()" id="btnLimparFiltros" style="padding: 0.5rem 1rem; font-size: 0.85rem; color: #6c757d; background: transparent; border: 1px solid #dee2e6;">
-                        🗑️ Limpar Filtros
+                        Limpar Filtros
                     </button>
                 </div>
                 
@@ -244,7 +243,6 @@
                 <!-- Estatísticas de Busca -->
                 <div class="search-stats" id="searchStats" style="display: none; margin-top: 1rem; padding: 0.75rem 1rem; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 8px; border-left: 4px solid #0066cc;">
                     <div class="stats-item" style="display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="font-size: 1.1rem;">📊</span>
                         <span class="stats-number" id="filteredCount" style="font-weight: bold; color: #0066cc; font-size: 1.1rem;">0</span>
                         <span class="stats-label" style="color: #6c757d; font-size: 0.9rem;">resultados encontrados</span>
                     </div>
@@ -256,12 +254,11 @@
                 <div class="table-header">
                     <div class="table-info">
                         <span id="imoveisResultadosInfo" class="results-info">
-                            <span class="info-icon">📊</span>
                             <span class="info-text">Carregando dados...</span>
                         </span>
                     </div>
                     <div class="table-pagination-controls">
-                        <label>📄 Itens por página:</label>
+                        <label>Itens por página:</label>
                         <select id="imoveisPorPaginaSelect" class="pagination-select">
                             <option value="10" selected>10</option>
                             <option value="25">25</option>
@@ -338,18 +335,17 @@
             <div class="form-group" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
                 <div style="display: grid; grid-template-columns: 2fr 1fr auto; gap: 1rem; align-items: end;">
                     <div>
-                        <label class="filter-label">👤 Nome do Locador</label>
+                        <label class="filter-label">Nome do Locador</label>
                         <div class="search-input-group">
-                            <span class="search-input-icon">👤</span>
                             <input type="text" id="nomeLocador" class="form-input search-input" placeholder="Digite o nome do locador...">
                         </div>
                     </div>
                     <div>
-                        <label class="filter-label">🏷️ Tipo</label>
+                        <label class="filter-label">Tipo</label>
                         <div class="select-wrapper">
                             <select id="tipoLocador" class="form-select filter-select">
-                                <option value="Pessoa Física">👤 Pessoa Física</option>
-                                <option value="Pessoa Jurídica">🏢 Pessoa Jurídica</option>
+                                <option value="Pessoa Física">Pessoa Física</option>
+                                <option value="Pessoa Jurídica">Pessoa Jurídica</option>
                             </select>
                             <span class="select-arrow">▼</span>
                         </div>
@@ -364,39 +360,38 @@
             <div class="search-filters" id="searchFilters" style="display: none;">
                 <div class="filter-grid">
                     <div class="filter-group">
-                        <label class="filter-label">🔍 Buscar Locador</label>
+                        <label class="filter-label">Buscar Locador</label>
                         <div class="search-input-group">
-                            <span class="search-input-icon">👤</span>
                             <input type="text" id="buscaLocador" class="form-input search-input" placeholder="Buscar por nome...">
                         </div>
                     </div>
                     
                     <div class="filter-group">
-                        <label class="filter-label">🏷️ Tipo de Pessoa</label>
+                        <label class="filter-label">Tipo de Pessoa</label>
                         <div class="select-wrapper">
                             <select id="filtroTipo" class="form-select filter-select">
-                                <option value="">🌐 Todos os tipos</option>
-                                <option value="Pessoa Física">👤 Pessoa Física</option>
-                                <option value="Pessoa Jurídica">🏢 Pessoa Jurídica</option>
+                                <option value="">Todos os tipos</option>
+                                <option value="Pessoa Física">Pessoa Física</option>
+                                <option value="Pessoa Jurídica">Pessoa Jurídica</option>
                             </select>
                             <span class="select-arrow">▼</span>
                         </div>
                     </div>
                     
                     <div class="filter-group">
-                        <label class="filter-label">📋 Status dos Documentos</label>
+                        <label class="filter-label">Status dos Documentos</label>
                         <div class="select-wrapper">
                             <select id="filtroStatus" class="form-select filter-select">
-                                <option value="">📄 Todos os status</option>
-                                <option value="completo">✅ Documentos Completos</option>
-                                <option value="pendente">⏳ Documentos Pendentes</option>
+                                <option value="">Todos os status</option>
+                                <option value="completo">Documentos Completos</option>
+                                <option value="pendente">Documentos Pendentes</option>
                             </select>
                             <span class="select-arrow">▼</span>
                         </div>
                     </div>
                     
                     <div class="filter-group">
-                        <label class="filter-label">🎯 Ações</label>
+                        <label class="filter-label">Ações</label>
                         <div style="display: flex; gap: 0.5rem;">
                             <button id="limparFiltros" class="btn btn-secondary btn-sm btn-compact">
                                 Limpar
