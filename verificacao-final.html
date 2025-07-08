@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Final - Filtros de Imóveis</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .test-result {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+            background: #f8f9fa;
+        }
+        .test-error {
+            border-left-color: #dc3545;
+            background: #ffe6e6;
+        }
+        .filter-test {
+            background: white;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Teste Final - Filtros de Imóveis</h1>
+        <p>Este teste verificará se as funções de filtro de imóveis estão funcionando corretamente.</p>
+        
+        <div id="testResults"></div>
+        
+        <div class="filter-test">
+            <h3>🔍 Teste dos Filtros</h3>
+            
+            <!-- Campos de filtro (simulando o HTML principal) -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                <div>
+                    <label for="filtroImoveis">Buscar Imóveis:</label>
+                    <input type="text" id="filtroImoveis" class="form-input" placeholder="Digite código, denominação ou local...">
+                </div>
+                <div>
+                    <label for="filtroStatusImoveis">Status:</label>
+                    <select id="filtroStatusImoveis" class="form-select">
+                        <option value="">Todos os status</option>
+                        <option value="Ativo">Ativo</option>
+                        <option value="Em prospecção">Em prospecção</option>
+                        <option value="Em mobilização">Em mobilização</option>
+                        <option value="Em desmobilização">Em desmobilização</option>
+                        <option value="Desativado">Desativado</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button id="btnLimparFiltros" class="btn btn-secondary">🗑️ Limpar Filtros</button>
+            
+            <!-- Estatísticas de busca -->
+            <div id="searchStats" style="display: none; margin-top: 1rem; padding: 1rem; background: #e3f2fd; border-radius: 8px;">
+                <span id="filteredCount">0</span> resultados encontrados
+            </div>
+        </div>
+        
+        <!-- Informações da tabela -->
+        <div id="imoveisResultadosInfo" style="margin: 1rem 0; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+            <span class="info-text">Carregando dados...</span>
+        </div>
+        
+        <!-- Mini tabela para teste -->
+        <div class="table-container">
+            <table class="table table-modern">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Denominação</th>
+                        <th>Local</th>
+                        <th>Status</th>
+                        <th>Locadores</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaImoveis"></tbody>
+            </table>
+        </div>
+        
+        <!-- Controles de paginação (simulados) -->
+        <div style="display: none;">
+            <span id="imoveis-pagination-info">Página 1 de 1</span>
+            <button id="primeiraPaginaImoveis">Primeira</button>
+            <button id="anteriorPaginaImoveis">Anterior</button>
+            <button id="proximaPaginaImoveis">Próxima</button>
+            <button id="ultimaPaginaImoveis">Última</button>
+            <select id="imoveisPorPaginaSelect">
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+            </select>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Teste adicional após carregamento
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🧪 Iniciando teste dos filtros...');
+            
+            const testResults = document.getElementById('testResults');
+            
+            // Aguardar um momento para o sistema inicializar
+            setTimeout(() => {
+                let html = '';
+                
+                // Verificar se o sistema foi criado
+                if (window.sistema) {
+                    html += '<div class="test-result">✅ Sistema SILIC carregado com sucesso</div>';
+                    
+                    // Verificar se as funções de filtro existem
+                    if (typeof window.sistema.configurarFiltrosImoveisImediato === 'function') {
+                        html += '<div class="test-result">✅ Função configurarFiltrosImoveisImediato encontrada</div>';
+                    } else {
+                        html += '<div class="test-result test-error">❌ Função configurarFiltrosImoveisImediato não encontrada</div>';
+                    }
+                    
+                    if (typeof window.sistema.filtrarImoveis === 'function') {
+                        html += '<div class="test-result">✅ Função filtrarImoveis encontrada</div>';
+                    } else {
+                        html += '<div class="test-result test-error">❌ Função filtrarImoveis não encontrada</div>';
+                    }
+                    
+                    if (typeof window.sistema.limparFiltrosImoveis === 'function') {
+                        html += '<div class="test-result">✅ Função limparFiltrosImoveis encontrada</div>';
+                    } else {
+                        html += '<div class="test-result test-error">❌ Função limparFiltrosImoveis não encontrada</div>';
+                    }
+                    
+                    // Verificar se há imóveis carregados
+                    if (window.sistema.imoveis && window.sistema.imoveis.length > 0) {
+                        html += `<div class="test-result">✅ ${window.sistema.imoveis.length} imóveis carregados</div>`;
+                    } else {
+                        html += '<div class="test-result test-error">❌ Nenhum imóvel carregado</div>';
+                    }
+                    
+                    // Verificar elementos HTML
+                    const elements = [
+                        'filtroImoveis',
+                        'filtroStatusImoveis', 
+                        'btnLimparFiltros',
+                        'searchStats',
+                        'filteredCount',
+                        'imoveisResultadosInfo',
+                        'tabelaImoveis'
+                    ];
+                    
+                    elements.forEach(id => {
+                        const element = document.getElementById(id);
+                        if (element) {
+                            html += `<div class="test-result">✅ Elemento "${id}" encontrado</div>`;
+                        } else {
+                            html += `<div class="test-result test-error">❌ Elemento "${id}" não encontrado</div>`;
+                        }
+                    });
+                    
+                } else {
+                    html += '<div class="test-result test-error">❌ Sistema SILIC não foi carregado</div>';
+                }
+                
+                testResults.innerHTML = html;
+                
+                // Tentar executar um teste prático
+                setTimeout(() => {
+                    if (window.sistema && window.sistema.imoveis && window.sistema.imoveis.length > 0) {
+                        console.log('🧪 Executando teste prático dos filtros...');
+                        
+                        // Testar filtro por texto
+                        const filtroInput = document.getElementById('filtroImoveis');
+                        if (filtroInput) {
+                            filtroInput.value = '20000001';
+                            window.sistema.filtrarImoveis();
+                            console.log('✅ Teste de filtro por código executado');
+                        }
+                        
+                        // Limpar filtros
+                        setTimeout(() => {
+                            window.sistema.limparFiltrosImoveis();
+                            console.log('✅ Teste de limpeza de filtros executado');
+                        }, 1000);
+                    }
+                }, 2000);
+                
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

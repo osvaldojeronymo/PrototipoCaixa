@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Console</title>
+</head>
+<body>
+    <h1>Debug do Sistema</h1>
+    <button onclick="testar()">Testar Manualmente</button>
+    <div id="output"></div>
+    
+    <script>
+        function log(msg) {
+            document.getElementById('output').innerHTML += '<div>' + msg + '</div>';
+        }
+        
+        function testar() {
+            try {
+                log('Tentando criar instância...');
+                
+                // Verificar se a classe existe
+                if (typeof SistemaSILIC === 'undefined') {
+                    log('❌ Classe SistemaSILIC não encontrada');
+                    return;
+                }
+                
+                log('✅ Classe encontrada, criando instância...');
+                const sistema = new SistemaSILIC();
+                log('✅ Instância criada');
+                
+                log('Imóveis: ' + (sistema.imoveis ? sistema.imoveis.length : 'undefined'));
+                log('Locadores: ' + (sistema.locadores ? sistema.locadores.length : 'undefined'));
+                
+            } catch (error) {
+                log('❌ ERRO: ' + error.message);
+                log('Stack: ' + error.stack);
+            }
+        }
+        
+        // Carregar script com verificação de erro
+        window.addEventListener('error', function(e) {
+            log('ERRO NO SCRIPT: ' + e.message + ' na linha ' + e.lineno);
+        });
+    </script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
